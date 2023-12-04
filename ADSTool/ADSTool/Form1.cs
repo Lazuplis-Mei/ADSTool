@@ -33,7 +33,21 @@ namespace ADSTool
             listView1.Items.Clear();
             foreach(var item in GetStreamDatas(fileName))
             {
-                listView1.Items.AddItem(item.Stream, item.Length.ToString());
+                string text;
+                if (item.Length >= 1024 * 1024)
+                {
+                    text = (item.Length / (1024f * 1024)).ToString("0.00") + " MB";
+                }
+                else if (item.Length >= 1024)
+                {
+                    text = (item.Length / 1024f).ToString("0.00") + " KB";
+                }
+                else
+                {
+                    text = item.Length.ToString() + " Bytes";
+                }
+
+                listView1.Items.AddItem(item.Stream, text);
             }
             listView1.Items[0].ForeColor = Color.Gray;
             listView1.Items[0].BackColor = Color.FromArgb(0xFF, 0xE5, 0xE5, 0xE5);
